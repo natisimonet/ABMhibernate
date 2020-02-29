@@ -14,6 +14,7 @@ import javax.persistence.UniqueConstraint;
 @Entity //mapeo de un objeto con una tabla
 @Table(name = "Persona", uniqueConstraints = {
 		@UniqueConstraint(columnNames = "ID")})
+@org.hibernate.annotations.Entity(dynamicUpdate = true)
 		
 public class PersonaEntity implements Serializable {
 	

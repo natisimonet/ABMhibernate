@@ -93,6 +93,10 @@ public class AppTestHibernate {
 		System.out.println("Ingrese ID a modificar");
 		int personaId = scan.nextInt();
 		PersonaEntity per = per1.getPersona(personaId);
+		if (per == null) {
+			System.out.println("El ID no existe elija una nuevo ID");
+			modificacion();
+		} else {
 
 		System.out.println("Elija columnas a modificar 1. Nombre, 2. Fecha_Nacimiento 3. Ambas");
 		int respuesta = scan.nextInt();
@@ -129,7 +133,7 @@ public class AppTestHibernate {
 			break;
 
 		}
-
+		}
 	}
 
 	private static void listado() {
@@ -140,11 +144,15 @@ public class AppTestHibernate {
 	private static void baja() {
 		PersonaDAO per1 = new PersonaDAO();
 		Scanner scan = new Scanner(System.in);
-		System.out.println("Ingrese ID a modificar");
+		System.out.println("Ingrese ID a Borrar");
 		int personaId = scan.nextInt();
 		PersonaEntity per = per1.getPersona(personaId);
+		if (per == null) {
+			System.out.println("El ID no existe elija un nuevo ID");
+			baja();
+		} else {
 		per1.deletePersona(per);
-
+		}
 	}
 
 	private static void nuevaVenta() {

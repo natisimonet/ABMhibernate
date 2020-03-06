@@ -20,7 +20,6 @@ import org.hibernate.Session;
 public class AppTestHibernate {
 
 	public static void main(String[] args) {
-		
 
 		System.out.println("SISTEMA DE PERSONAS (ABM)");
 		System.out.println("=========================");
@@ -57,47 +56,10 @@ public class AppTestHibernate {
 
 	}
 
-	private static void listadoVenta() {
-		VentaDAO ven1 = new VentaDAO();
-		ven1.getAllventa();
-		
-	}
-
-	private static void baja() {
-		PersonaDAO per1 = new PersonaDAO();
-		Scanner scan = new Scanner(System.in);
-		System.out.println("Ingrese ID a modificar");
-		int personaId = scan.nextInt();
-		PersonaEntity per = per1.getPersona(personaId);
-		per1.deletePersona(per);
-
-	}
-
-	private static void nuevaVenta() {
-		VentaEntity ven = new VentaEntity();
-		Scanner scan = new Scanner(System.in);
-		System.out.println("Ingrese ID persona");
-		int personaId = scan.nextInt();
-		PersonaDAO per1 = new PersonaDAO();
-		PersonaEntity per = per1.getPersona(personaId);
-		System.out.println("La persona seleccionada es:" + per.getName());
-		ven.setPersonaEntity(per);
-		System.out.println("Ingrese Monto de la venta");
-		float importe = scan.nextFloat();
-		ven.setImporte(importe);
-		Date fecha = new Date();
-		SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		String fecha2 = ft.format(fecha);
-		ven.setFechaVenta(fecha2);
-		
-		VentaDAO ven1 = new VentaDAO();
-		ven1.insertVenta(ven);
-
-	}
-
 	private static int mostrarMenu() {
 		Scanner sc = new Scanner(System.in);
-		System.out.println("MENU OPCIONES: 1 -Alta | 2-Modificación | 3- Listado | 4- Baja | 5- Venta | 6- Listado de Ventas");
+		System.out.println(
+				"MENU OPCIONES: 1 -Alta | 2-Modificación | 3- Listado | 4- Baja | 5- Venta | 6- Listado de Ventas");
 		int opcion = sc.nextInt();
 		return opcion;
 	}
@@ -173,6 +135,44 @@ public class AppTestHibernate {
 	private static void listado() {
 		PersonaDAO per1 = new PersonaDAO();
 		per1.getAllPersona();
+	}
+
+	private static void baja() {
+		PersonaDAO per1 = new PersonaDAO();
+		Scanner scan = new Scanner(System.in);
+		System.out.println("Ingrese ID a modificar");
+		int personaId = scan.nextInt();
+		PersonaEntity per = per1.getPersona(personaId);
+		per1.deletePersona(per);
+
+	}
+
+	private static void nuevaVenta() {
+		VentaEntity ven = new VentaEntity();
+		Scanner scan = new Scanner(System.in);
+		System.out.println("Ingrese ID persona");
+		int personaId = scan.nextInt();
+		PersonaDAO per1 = new PersonaDAO();
+		PersonaEntity per = per1.getPersona(personaId);
+		System.out.println("La persona seleccionada es:" + per.getName());
+		ven.setPersonaEntity(per);
+		System.out.println("Ingrese Monto de la venta");
+		float importe = scan.nextFloat();
+		ven.setImporte(importe);
+		Date fecha = new Date();
+		SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String fecha2 = ft.format(fecha);
+		ven.setFechaVenta(fecha2);
+
+		VentaDAO ven1 = new VentaDAO();
+		ven1.insertVenta(ven);
+
+	}
+
+	private static void listadoVenta() {
+		VentaDAO ven1 = new VentaDAO();
+		ven1.getAllventa();
+
 	}
 
 	private static int calcularEdad(Date fechaNac) {

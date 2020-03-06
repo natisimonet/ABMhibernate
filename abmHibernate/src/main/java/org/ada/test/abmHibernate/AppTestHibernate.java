@@ -45,8 +45,10 @@ public class AppTestHibernate {
 				break;
 			case 5:
 				nuevaVenta();
+				break;
 			case 6:
 				listadoVenta();
+				break;
 			}
 
 			opcion = mostrarMenu();

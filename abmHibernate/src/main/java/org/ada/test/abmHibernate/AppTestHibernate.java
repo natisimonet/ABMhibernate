@@ -20,8 +20,7 @@ import org.hibernate.Session;
 public class AppTestHibernate {
 
 	public static void main(String[] args) {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		session.beginTransaction();
+		
 
 		System.out.println("SISTEMA DE PERSONAS (ABM)");
 		System.out.println("=========================");

@@ -22,7 +22,7 @@ public class PersonaEntity implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY) //identidad que va a generarse en la base de datos de forma secuencial
-	@Column(name = "ID", unique = true, nullable = false) // ID corresponde al dato employeeID de abajo
+	@Column(name = "ID", unique = true, nullable = false) 
 	private Integer personaId;
 	
 	@Column(name = "NOMBRE", unique = true, nullable = false, length = 100)

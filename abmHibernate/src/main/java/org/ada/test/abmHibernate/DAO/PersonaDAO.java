@@ -24,11 +24,7 @@ public class PersonaDAO {
 		List<PersonaEntity> perso = new ArrayList<PersonaEntity>();
 		try {
 			perso = sesn.createQuery("From PersonaEntity").list();
-			System.out.println("ID| Nombre| Edad | Fecha Nacimiento");
-			for (PersonaEntity per : perso) {
-				System.out
-						.println(per.getPersonaId() + " " + per.getName() + " " + per.getEdad() + " " + per.getfNac());
-			}
+			
 		} catch (HibernateException e) {
 			e.printStackTrace();
 		} finally {

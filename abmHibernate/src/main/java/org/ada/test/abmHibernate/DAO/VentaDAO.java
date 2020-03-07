@@ -25,13 +25,8 @@ public class VentaDAO {
 		List<VentaEntity> venta = new ArrayList<VentaEntity>();
 		try {
 			venta = sesn.createQuery("From VentaEntity").list();
-			System.out.println("ID_Venta| Fecha| Importe | ID_Persona");
-			for (VentaEntity ven : venta) {
-				PersonaEntity nuevo = ven.getPersonaEntity();
-				int id = nuevo.getPersonaId();
-				System.out
-						.println(ven.getVentaId() + " " + ven.getFechaVenta() + " " + ven.getImporte() + " " + id);
-			}
+		
+			
 		} catch (HibernateException e) {
 			e.printStackTrace();
 		} finally {

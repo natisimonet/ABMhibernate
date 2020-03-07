@@ -25,10 +25,10 @@ public class PersonaEntity implements Serializable {
 	@Column(name = "ID", unique = true, nullable = false) 
 	private Integer personaId;
 	
-	@Column(name = "NOMBRE", unique = true, nullable = false, length = 100)
+	@Column(name = "NOMBRE", unique = false, nullable = false, length = 100)
 	private String name;
 	
-	@Column(name = "EDAD", unique = false, nullable = false, length = 100)
+	@Column(name = "EDAD", unique = false, nullable = false)
 	private int edad;
 	
 	@Column(name = "FECHA_NACIMIENTO", unique = false, nullable = false, length = 100)

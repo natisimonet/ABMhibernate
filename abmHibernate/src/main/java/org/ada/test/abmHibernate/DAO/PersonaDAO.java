@@ -11,7 +11,7 @@ import org.hibernate.Session;
 
 public class PersonaDAO {
 
-	public void insertPersona(PersonaEntity per) {
+	public void insertOrUpdatePersona(PersonaEntity per) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		session.beginTransaction();
 		session.saveOrUpdate(per);
@@ -35,15 +35,6 @@ public class PersonaDAO {
 		return perso;
 	}
 
-	public void updatePersona(PersonaEntity per) {
-		
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		session.beginTransaction();
-		session.update(per);
-		session.getTransaction().commit();
-		HibernateUtil.shutdown();
-
-	}
 	
 	public PersonaEntity getPersona(int personaId) {
 		Session sesn = HibernateUtil.getSessionFactory().openSession();

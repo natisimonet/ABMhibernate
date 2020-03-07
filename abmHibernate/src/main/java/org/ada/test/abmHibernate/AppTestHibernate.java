@@ -86,7 +86,7 @@ public class AppTestHibernate {
 			e1.printStackTrace();
 		}
 		per.setEdad(edad);
-		perDAO.insertPersona(per);
+		perDAO.insertOrUpdatePersona(per);
 	}
 
 	private static void modificacion(PersonaDAO perDAO, Scanner scan, PersonaEntity per) {
@@ -107,7 +107,7 @@ public class AppTestHibernate {
 				System.out.println("Ingrese nuevo Nombre");
 				String nombrecambiado = scan.next();
 				per.setName(nombrecambiado);
-				perDAO.updatePersona(per);
+				perDAO.insertOrUpdatePersona(per);
 				break;
 			case 2:
 				System.out.println("Ingrese fecha de nacimiento YYYY-MM-DD");
@@ -125,7 +125,7 @@ public class AppTestHibernate {
 				}
 				per.setEdad(edad);
 
-				perDAO.updatePersona(per);
+				perDAO.insertOrUpdatePersona(per);
 				break;
 			case 3:
 				System.out.println("Ingrese nuevo Nombre");
@@ -145,7 +145,7 @@ public class AppTestHibernate {
 					e1.printStackTrace();
 				}
 				per.setEdad(edad);
-				perDAO.updatePersona(per);
+				perDAO.insertOrUpdatePersona(per);
 				break;
 			default:
 				break;

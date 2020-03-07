@@ -20,7 +20,9 @@ import org.hibernate.Session;
 public class AppTestHibernate {
 	static PersonaDAO perDAO = new PersonaDAO();
 	static VentaDAO venDAO = new VentaDAO();
+	static PersonaEntity per = new PersonaEntity();
 	static Scanner scan = new Scanner(System.in);
+	static VentaEntity ven = new VentaEntity();
 
 	public static void main(String[] args) {
 
@@ -34,22 +36,22 @@ public class AppTestHibernate {
 
 			switch (opcion) {
 			case 1:
-				alta(perDAO, scan);
+				alta(perDAO, scan, per);
 				break;
 			case 2:
-				modificacion(perDAO, scan);
+				modificacion(perDAO, scan, per);
 				break;
 			case 3:
 				listado(perDAO);
 				break;
 			case 4:
-				baja(perDAO, scan);
+				baja(perDAO, scan, per);
 				break;
 			case 5:
-				nuevaVenta(venDAO, scan);
+				nuevaVenta(perDAO, scan, per, venDAO, ven);
 				break;
 			case 6:
-				listadoVenta(venDAO);
+				listadoVenta(per, venDAO);
 				break;
 			}
 
@@ -67,8 +69,8 @@ public class AppTestHibernate {
 		return opcion;
 	}
 
-	private static void alta(PersonaDAO perDAO, Scanner scan) {
-		PersonaEntity per = new PersonaEntity();
+	private static void alta(PersonaDAO perDAO, Scanner scan, PersonaEntity per) {
+		
 		System.out.println("Ingrese Nombre");
 		String name = scan.next();
 		per.setName(name);
@@ -87,14 +89,14 @@ public class AppTestHibernate {
 		perDAO.insertPersona(per);
 	}
 
-	private static void modificacion(PersonaDAO perDAO, Scanner scan) {
+	private static void modificacion(PersonaDAO perDAO, Scanner scan, PersonaEntity per) {
 
 		System.out.println("Ingrese ID a modificar");
 		int personaId = scan.nextInt();
-		PersonaEntity per = perDAO.getPersona(personaId);
+		per = perDAO.getPersona(personaId);
 		if (per == null) {
 			System.out.println("El ID no existe elija una nuevo ID");
-			modificacion(perDAO, scan);
+			modificacion(perDAO, scan, per);
 		} else {
 
 			System.out.println("Elija columnas a modificar 1. Nombre, 2. Fecha_Nacimiento 3. Ambas");
@@ -162,25 +164,23 @@ public class AppTestHibernate {
 		}
 	}
 
-	private static void baja(PersonaDAO perDAO, Scanner scan) {
+	private static void baja(PersonaDAO perDAO, Scanner scan, PersonaEntity per) {
 
 		System.out.println("Ingrese ID a Borrar");
 		int personaId = scan.nextInt();
-		PersonaEntity per = perDAO.getPersona(personaId);
+		per = perDAO.getPersona(personaId);
 		if (per == null) {
 			System.out.println("El ID no existe elija un nuevo ID");
-			baja(perDAO, scan);
+			baja(perDAO, scan, per);
 		} else {
 			perDAO.deletePersona(per);
 		}
 	}
 
-	private static void nuevaVenta(VentaDAO venDAO, Scanner scan) {
-		VentaEntity ven = new VentaEntity();
+	private static void nuevaVenta(PersonaDAO perDAO, Scanner scan, PersonaEntity per, VentaDAO venDAO, VentaEntity ven) {
 		System.out.println("Ingrese ID persona");
 		int personaId = scan.nextInt();
-		PersonaDAO per1 = new PersonaDAO();
-		PersonaEntity per = per1.getPersona(personaId);
+		per = perDAO.getPersona(personaId);
 		System.out.println("La persona seleccionada es:" + per.getName());
 		ven.setPersonaEntity(per);
 		System.out.println("Ingrese Monto de la venta");
@@ -194,14 +194,14 @@ public class AppTestHibernate {
 
 	}
 
-	private static void listadoVenta(VentaDAO venDAO) {
+	private static void listadoVenta(PersonaEntity per, VentaDAO venDAO) {
 
 		List<VentaEntity> listadoventa = venDAO.getAllventa();
 		System.out.println("ID_Venta| Fecha| Importe | ID_Persona | Nombre");
 		for (VentaEntity ven : listadoventa) {
-			PersonaEntity nuevo = ven.getPersonaEntity();
-			int id = nuevo.getPersonaId();
-			String nombre = nuevo.getName();
+			per = ven.getPersonaEntity();
+			int id = per.getPersonaId();
+			String nombre = per.getName();
 			System.out.println(
 					ven.getVentaId() + " " + ven.getFechaVenta() + " " + ven.getImporte() + " " + id + " " + nombre);
 

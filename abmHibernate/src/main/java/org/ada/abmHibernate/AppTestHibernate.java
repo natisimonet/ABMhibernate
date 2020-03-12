@@ -30,7 +30,7 @@ public class AppTestHibernate {
 
 		System.out.println("");
 
-		int opcion = mostrarMenu(scan);
+		int opcion = mostrarMenu();
 		while (opcion != 0) {
 
 			switch (opcion) {

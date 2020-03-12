@@ -1,9 +1,4 @@
-package org.ada.test.abmHibernate;
-
-import org.ada.test.abmHibernate.DAO.PersonaDAO;
-import org.ada.test.abmHibernate.DAO.VentaDAO;
-import org.ada.test.abmHibernate.dto.PersonaEntity;
-import org.ada.test.abmHibernate.dto.VentaEntity;
+package org.ada.abmHibernate;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -14,6 +9,10 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Scanner;
 
+import org.ada.abmHibernate.DAO.PersonaDAO;
+import org.ada.abmHibernate.DAO.VentaDAO;
+import org.ada.abmHibernate.dto.PersonaEntity;
+import org.ada.abmHibernate.dto.VentaEntity;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 
@@ -36,32 +35,32 @@ public class AppTestHibernate {
 
 			switch (opcion) {
 			case 1:
-				alta(perDAO, scan, per);
+				alta();
 				break;
 			case 2:
-				modificacion(perDAO, scan, per);
+				modificacion();
 				break;
 			case 3:
-				listado(perDAO);
+				listado();
 				break;
 			case 4:
-				baja(perDAO, scan, per);
+				baja();
 				break;
 			case 5:
-				nuevaVenta(perDAO, scan, per, venDAO, ven);
+				nuevaVenta();
 				break;
 			case 6:
-				listadoVenta(per, venDAO);
+				listadoVenta();
 				break;
 			}
 
-			opcion = mostrarMenu(scan);
+			opcion = mostrarMenu();
 
 		}
 
 	}
 
-	private static int mostrarMenu(Scanner scan) {
+	private static int mostrarMenu() {
 
 		System.out.println(
 				"MENU OPCIONES: 1 -Alta | 2-Modificación | 3- Listado | 4- Baja | 5- Venta | 6- Listado de Ventas");
@@ -69,7 +68,7 @@ public class AppTestHibernate {
 		return opcion;
 	}
 
-	private static void alta(PersonaDAO perDAO, Scanner scan, PersonaEntity per) {
+	private static void alta() {
 		
 		System.out.println("Ingrese Nombre");
 		String name = scan.next();
@@ -89,14 +88,14 @@ public class AppTestHibernate {
 		perDAO.insertOrUpdatePersona(per);
 	}
 
-	private static void modificacion(PersonaDAO perDAO, Scanner scan, PersonaEntity per) {
+	private static void modificacion() {
 
 		System.out.println("Ingrese ID a modificar");
 		int personaId = scan.nextInt();
 		per = perDAO.getPersona(personaId);
 		if (per == null) {
 			System.out.println("El ID no existe elija una nuevo ID");
-			modificacion(perDAO, scan, per);
+			modificacion();
 		} else {
 
 			System.out.println("Elija columnas a modificar 1. Nombre, 2. Fecha_Nacimiento 3. Ambas");
@@ -154,7 +153,7 @@ public class AppTestHibernate {
 		}
 	}
 
-	private static void listado(PersonaDAO perDAO) {
+	private static void listado() {
 
 		List<PersonaEntity> listaPersona = perDAO.getAllPersona();
 
@@ -164,20 +163,20 @@ public class AppTestHibernate {
 		}
 	}
 
-	private static void baja(PersonaDAO perDAO, Scanner scan, PersonaEntity per) {
+	private static void baja() {
 
 		System.out.println("Ingrese ID a Borrar");
 		int personaId = scan.nextInt();
 		per = perDAO.getPersona(personaId);
 		if (per == null) {
 			System.out.println("El ID no existe elija un nuevo ID");
-			baja(perDAO, scan, per);
+			baja();
 		} else {
 			perDAO.deletePersona(per);
 		}
 	}
 
-	private static void nuevaVenta(PersonaDAO perDAO, Scanner scan, PersonaEntity per, VentaDAO venDAO, VentaEntity ven) {
+	private static void nuevaVenta() {
 		System.out.println("Ingrese ID persona");
 		int personaId = scan.nextInt();
 		per = perDAO.getPersona(personaId);
@@ -194,7 +193,7 @@ public class AppTestHibernate {
 
 	}
 
-	private static void listadoVenta(PersonaEntity per, VentaDAO venDAO) {
+	private static void listadoVenta() {
 
 		List<VentaEntity> listadoventa = venDAO.getAllventa();
 		System.out.println("ID_Venta| Fecha| Importe | ID_Persona | Nombre");

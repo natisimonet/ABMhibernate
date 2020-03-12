@@ -1,4 +1,4 @@
-package org.ada.test.abmHibernate.dto;
+package org.ada.abmHibernate.dto;
 
 import java.io.Serializable;
 

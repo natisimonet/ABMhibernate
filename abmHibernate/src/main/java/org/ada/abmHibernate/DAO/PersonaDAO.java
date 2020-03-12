@@ -1,11 +1,11 @@
-package org.ada.test.abmHibernate.DAO;
+package org.ada.abmHibernate.DAO;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import org.ada.test.abmHibernate.HibernateUtil;
-import org.ada.test.abmHibernate.dto.PersonaEntity;
+import org.ada.abmHibernate.HibernateUtil;
+import org.ada.abmHibernate.dto.PersonaEntity;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 

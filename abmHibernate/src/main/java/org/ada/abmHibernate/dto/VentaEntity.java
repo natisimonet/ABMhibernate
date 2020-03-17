@@ -1,4 +1,4 @@
-package org.ada.test.abmHibernate.dto;
+package org.ada.abmHibernate.dto;
 
 import java.io.Serializable;
 
@@ -27,7 +27,7 @@ public class VentaEntity implements Serializable {
 	@Column(name = "VentaId", unique = true, nullable = false) // ID corresponde al dato employeeID de abajo
 	private Integer ventaId;
 	
-	@Column(name = "Fecha", unique = true, nullable = false)
+	@Column(name = "Fecha", unique = false, nullable = false)
 	private String fechaVenta;
 	
 	@Column(name = "Importe", unique = false, nullable = false)

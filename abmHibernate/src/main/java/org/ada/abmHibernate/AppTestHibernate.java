@@ -1,9 +1,4 @@
-package org.ada.test.abmHibernate;
-
-import org.ada.test.abmHibernate.DAO.PersonaDAO;
-import org.ada.test.abmHibernate.DAO.VentaDAO;
-import org.ada.test.abmHibernate.dto.PersonaEntity;
-import org.ada.test.abmHibernate.dto.VentaEntity;
+package org.ada.abmHibernate;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -14,10 +9,19 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Scanner;
 
+import org.ada.abmHibernate.DAO.PersonaDAO;
+import org.ada.abmHibernate.DAO.VentaDAO;
+import org.ada.abmHibernate.dto.PersonaEntity;
+import org.ada.abmHibernate.dto.VentaEntity;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 
 public class AppTestHibernate {
+	static PersonaDAO perDAO = new PersonaDAO();
+	static VentaDAO venDAO = new VentaDAO();
+	static PersonaEntity per = new PersonaEntity();
+	static Scanner scan = new Scanner(System.in);
+	static VentaEntity ven = new VentaEntity();
 
 	public static void main(String[] args) {
 
@@ -57,16 +61,15 @@ public class AppTestHibernate {
 	}
 
 	private static int mostrarMenu() {
-		Scanner sc = new Scanner(System.in);
+
 		System.out.println(
 				"MENU OPCIONES: 1 -Alta | 2-Modificación | 3- Listado | 4- Baja | 5- Venta | 6- Listado de Ventas");
-		int opcion = sc.nextInt();
+		int opcion = scan.nextInt();
 		return opcion;
 	}
 
 	private static void alta() {
-		PersonaEntity per = new PersonaEntity();
-		Scanner scan = new Scanner(System.in);
+		
 		System.out.println("Ingrese Nombre");
 		String name = scan.next();
 		per.setName(name);
@@ -82,86 +85,101 @@ public class AppTestHibernate {
 			e1.printStackTrace();
 		}
 		per.setEdad(edad);
-
-		PersonaDAO per1 = new PersonaDAO();
-		per1.insertPersona(per);
+		perDAO.insertOrUpdatePersona(per);
 	}
 
 	private static void modificacion() {
-		PersonaDAO per1 = new PersonaDAO();
-		Scanner scan = new Scanner(System.in);
+
 		System.out.println("Ingrese ID a modificar");
 		int personaId = scan.nextInt();
-		PersonaEntity per = per1.getPersona(personaId);
+		per = perDAO.getPersona(personaId);
 		if (per == null) {
 			System.out.println("El ID no existe elija una nuevo ID");
 			modificacion();
 		} else {
 
-		System.out.println("Elija columnas a modificar 1. Nombre, 2. Fecha_Nacimiento 3. Ambas");
-		int respuesta = scan.nextInt();
-		switch (respuesta) {
-		case 1:
+			System.out.println("Elija columnas a modificar 1. Nombre, 2. Fecha_Nacimiento 3. Ambas");
+			int respuesta = scan.nextInt();
+			switch (respuesta) {
+			case 1:
 
-			System.out.println("Ingrese nuevo Nombre");
-			String nombrecambiado = scan.next();
-			per.setName(nombrecambiado);
-			per1.updatePersona(per);
-			break;
-		case 2:
-			System.out.println("Ingrese nuevo Nombre");
-			nombrecambiado = scan.next();
-			per.setName(nombrecambiado);
-			System.out.println("Ingrese fecha de nacimiento YYYY-MM-DD");
-			String fechadenac = scan.next();
-			per.setfNac(fechadenac);
-			SimpleDateFormat sfd = new SimpleDateFormat("yyyy-MM-dd");
-			int edad = 0;
-			try {
-				Date fechaNac = sfd.parse(fechadenac);
-				edad = calcularEdad(fechaNac);
+				System.out.println("Ingrese nuevo Nombre");
+				String nombrecambiado = scan.next();
+				per.setName(nombrecambiado);
+				perDAO.insertOrUpdatePersona(per);
+				break;
+			case 2:
+				System.out.println("Ingrese fecha de nacimiento YYYY-MM-DD");
+				String fechadenac = scan.next();
+				per.setfNac(fechadenac);
+				SimpleDateFormat sfd = new SimpleDateFormat("yyyy-MM-dd");
+				int edad = 0;
+				try {
+					Date fechaNac = sfd.parse(fechadenac);
+					edad = calcularEdad(fechaNac);
 
-			} catch (ParseException e1) {
+				} catch (ParseException e1) {
 
-				e1.printStackTrace();
+					e1.printStackTrace();
+				}
+				per.setEdad(edad);
+
+				perDAO.insertOrUpdatePersona(per);
+				break;
+			case 3:
+				System.out.println("Ingrese nuevo Nombre");
+				nombrecambiado = scan.next();
+				per.setName(nombrecambiado);
+				System.out.println("Ingrese fecha de nacimiento YYYY-MM-DD");
+				fechadenac = scan.next();
+				per.setfNac(fechadenac);
+				sfd = new SimpleDateFormat("yyyy-MM-dd");
+				edad = 0;
+				try {
+					Date fechaNac = sfd.parse(fechadenac);
+					edad = calcularEdad(fechaNac);
+
+				} catch (ParseException e1) {
+
+					e1.printStackTrace();
+				}
+				per.setEdad(edad);
+				perDAO.insertOrUpdatePersona(per);
+				break;
+			default:
+				break;
+
 			}
-			per.setEdad(edad);
-			PersonaDAO per3 = new PersonaDAO();
-			per3.updatePersona(per);
-			break;
-		default:
-			break;
-
-		}
 		}
 	}
 
 	private static void listado() {
-		PersonaDAO per1 = new PersonaDAO();
-		per1.getAllPersona();
+
+		List<PersonaEntity> listaPersona = perDAO.getAllPersona();
+
+		System.out.println("ID| Nombre| Edad | Fecha Nacimiento");
+		for (PersonaEntity per : listaPersona) {
+			System.out.println(per.getPersonaId() + " " + per.getName() + " " + per.getEdad() + " " + per.getfNac());
+		}
 	}
 
 	private static void baja() {
-		PersonaDAO per1 = new PersonaDAO();
-		Scanner scan = new Scanner(System.in);
+
 		System.out.println("Ingrese ID a Borrar");
 		int personaId = scan.nextInt();
-		PersonaEntity per = per1.getPersona(personaId);
+		per = perDAO.getPersona(personaId);
 		if (per == null) {
 			System.out.println("El ID no existe elija un nuevo ID");
 			baja();
 		} else {
-		per1.deletePersona(per);
+			perDAO.deletePersona(per);
 		}
 	}
 
 	private static void nuevaVenta() {
-		VentaEntity ven = new VentaEntity();
-		Scanner scan = new Scanner(System.in);
 		System.out.println("Ingrese ID persona");
 		int personaId = scan.nextInt();
-		PersonaDAO per1 = new PersonaDAO();
-		PersonaEntity per = per1.getPersona(personaId);
+		per = perDAO.getPersona(personaId);
 		System.out.println("La persona seleccionada es:" + per.getName());
 		ven.setPersonaEntity(per);
 		System.out.println("Ingrese Monto de la venta");
@@ -171,16 +189,22 @@ public class AppTestHibernate {
 		SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String fecha2 = ft.format(fecha);
 		ven.setFechaVenta(fecha2);
-
-		VentaDAO ven1 = new VentaDAO();
-		ven1.insertVenta(ven);
+		venDAO.insertVenta(ven);
 
 	}
 
 	private static void listadoVenta() {
-		VentaDAO ven1 = new VentaDAO();
-		ven1.getAllventa();
 
+		List<VentaEntity> listadoventa = venDAO.getAllventa();
+		System.out.println("ID_Venta| Fecha| Importe | ID_Persona | Nombre");
+		for (VentaEntity ven : listadoventa) {
+			per = ven.getPersonaEntity();
+			int id = per.getPersonaId();
+			String nombre = per.getName();
+			System.out.println(
+					ven.getVentaId() + " " + ven.getFechaVenta() + " " + ven.getImporte() + " " + id + " " + nombre);
+
+		}
 	}
 
 	private static int calcularEdad(Date fechaNac) {

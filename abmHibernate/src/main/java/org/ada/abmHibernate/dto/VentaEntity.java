@@ -1,6 +1,7 @@
 package org.ada.abmHibernate.dto;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,7 +29,7 @@ public class VentaEntity implements Serializable {
 	private Integer ventaId;
 	
 	@Column(name = "Fecha", unique = false, nullable = false)
-	private String fechaVenta;
+	private Date fechaVenta;
 	
 	@Column(name = "Importe", unique = false, nullable = false)
 	private float importe;
@@ -45,11 +46,11 @@ public class VentaEntity implements Serializable {
 		this.ventaId = ventaId;
 	}
 
-	public String getFechaVenta() {
+	public Date getFechaVenta() {
 		return fechaVenta;
 	}
 
-	public void setFechaVenta(String fechaVenta) {
+	public void setFechaVenta(Date fechaVenta) {
 		this.fechaVenta = fechaVenta;
 	}
 

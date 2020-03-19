@@ -16,6 +16,8 @@ import org.ada.abmHibernate.dto.VentaEntity;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 
+import hibernate.util.DateUtil;
+
 public class AppTestHibernate {
 	static PersonaDAO perDAO = new PersonaDAO();
 	static VentaDAO venDAO = new VentaDAO();
@@ -23,7 +25,7 @@ public class AppTestHibernate {
 	static Scanner scan = new Scanner(System.in);
 	static VentaEntity ven = new VentaEntity();
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws ParseException {
 
 		System.out.println("SISTEMA DE PERSONAS (ABM)");
 		System.out.println("=========================");
@@ -68,27 +70,25 @@ public class AppTestHibernate {
 		return opcion;
 	}
 
-	private static void alta() {
-		
+	private static void alta() throws ParseException {
+
 		System.out.println("Ingrese Nombre");
 		String name = scan.next();
 		per.setName(name);
 		System.out.println("Ingrese Fecha de Nacimiento en Formato YYYY-MM-DD");
-		String fNac = scan.next();
-		per.setfNac(fNac);
+		String fechaDeNac = scan.next();
+		per.setfNac(fechaDeNac);
 		SimpleDateFormat sfd = new SimpleDateFormat("yyyy-MM-dd");
 		int edad = 0;
-		try {
-			Date fechaNac = sfd.parse(fNac);
-			edad = calcularEdad(fechaNac);
-		} catch (ParseException e1) {
-			e1.printStackTrace();
-		}
+	
+		Date fechaparse = DateUtil.parse(DateUtil.PATTERN_D2_M2_Y4, fechaDeNac);
+		edad = calcularEdad(fechaparse);
+
 		per.setEdad(edad);
 		perDAO.insertOrUpdatePersona(per);
 	}
 
-	private static void modificacion() {
+	private static void modificacion() throws ParseException {
 
 		System.out.println("Ingrese ID a modificar");
 		int personaId = scan.nextInt();
@@ -110,18 +110,15 @@ public class AppTestHibernate {
 				break;
 			case 2:
 				System.out.println("Ingrese fecha de nacimiento YYYY-MM-DD");
-				String fechadenac = scan.next();
-				per.setfNac(fechadenac);
+				String fechaDeNac = scan.next();
+				per.setfNac(fechaDeNac);
 				SimpleDateFormat sfd = new SimpleDateFormat("yyyy-MM-dd");
 				int edad = 0;
-				try {
-					Date fechaNac = sfd.parse(fechadenac);
-					edad = calcularEdad(fechaNac);
+				
 
-				} catch (ParseException e1) {
+				Date fechaparse = DateUtil.parse(DateUtil.PATTERN_D2_M2_Y4, fechaDeNac);
+				edad = calcularEdad(fechaparse);
 
-					e1.printStackTrace();
-				}
 				per.setEdad(edad);
 
 				perDAO.insertOrUpdatePersona(per);
@@ -130,19 +127,15 @@ public class AppTestHibernate {
 				System.out.println("Ingrese nuevo Nombre");
 				nombrecambiado = scan.next();
 				per.setName(nombrecambiado);
-				System.out.println("Ingrese fecha de nacimiento YYYY-MM-DD");
-				fechadenac = scan.next();
-				per.setfNac(fechadenac);
-				sfd = new SimpleDateFormat("yyyy-MM-dd");
+				System.out.println("Ingrese fecha de nacimiento YYYY/MM/DD");
+				fechaDeNac = scan.next();
+				per.setfNac(fechaDeNac);
+
 				edad = 0;
-				try {
-					Date fechaNac = sfd.parse(fechadenac);
-					edad = calcularEdad(fechaNac);
 
-				} catch (ParseException e1) {
+				fechaparse = DateUtil.parse(DateUtil.PATTERN_D2_M2_Y4, fechaDeNac);
+				edad = calcularEdad(fechaparse);
 
-					e1.printStackTrace();
-				}
 				per.setEdad(edad);
 				perDAO.insertOrUpdatePersona(per);
 				break;
@@ -186,9 +179,8 @@ public class AppTestHibernate {
 		float importe = scan.nextFloat();
 		ven.setImporte(importe);
 		Date fecha = new Date();
-		SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		String fecha2 = ft.format(fecha);
-		ven.setFechaVenta(fecha2);
+		ven.setFechaVenta(fecha);
+
 		venDAO.insertVenta(ven);
 
 	}

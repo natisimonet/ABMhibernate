@@ -1,6 +1,9 @@
 package org.ada.test.abmHibernate;
 
+import java.util.List;
+
 import org.ada.abmHibernate.DAO.PersonaDAO;
+import org.ada.abmHibernate.dto.PersonaEntity;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -12,21 +15,16 @@ import junit.framework.TestSuite;
 public class AppTest 
     extends TestCase
 {
-    /**
-     * Create the test case
-     *
-     * @param testName name of the test case
-     */
+
     public void AppTest () {
     System.out.println("Test 1");
     PersonaDAO dao = new PersonaDAO();
-    
+    List<PersonaEntity> list = dao.getAllPersona();    
+    boolean tieneRegistros = list.size() > 0;
+    assertTrue(tieneRegistros);
     	
     }
 
-    /**
-     * @return the suite of tests being tested
-     */
     public static Test suite()
     {
         return new TestSuite( AppTest.class );

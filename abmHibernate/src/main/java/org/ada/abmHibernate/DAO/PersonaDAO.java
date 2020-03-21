@@ -24,7 +24,7 @@ public class PersonaDAO {
 		List<PersonaEntity> perso = new ArrayList<PersonaEntity>();
 		try {
 			perso = sesn.createQuery("From PersonaEntity").list();
-			
+
 		} catch (HibernateException e) {
 			e.printStackTrace();
 		} finally {
@@ -35,7 +35,6 @@ public class PersonaDAO {
 		return perso;
 	}
 
-	
 	public PersonaEntity getPersona(int personaId) {
 		Session sesn = HibernateUtil.getSessionFactory().openSession();
 		PersonaEntity perso = null;
@@ -54,13 +53,29 @@ public class PersonaDAO {
 		HibernateUtil.shutdown();
 		return perso;
 	}
-	
+
+	public List<PersonaEntity> getPersonaXnombre(String name) { 
+		Session sesn = HibernateUtil.getSessionFactory().openSession();
+		PersonaEntity perso = null;
+		List<PersonaEntity> perso1 = new ArrayList<PersonaEntity>();
+		try {
+			perso1 = sesn.createQuery("From PersonaEntity Where NOMBRE ='" + name + "'" ).list();
+		} catch (HibernateException e) {
+			e.printStackTrace();
+		} finally {
+			sesn.close();
+		}
+
+		HibernateUtil.shutdown();
+		return perso1;
+	}
+
 	public void deletePersona(PersonaEntity per) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		session.beginTransaction();
 		session.delete(per);
 		session.getTransaction().commit();
 		HibernateUtil.shutdown();
-		
+
 	}
 }

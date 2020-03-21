@@ -18,7 +18,7 @@ import org.hibernate.Session;
 
 import hibernate.util.DateUtil;
 
-public class AppTestHibernate {
+public class AppHibernate {
 	static PersonaDAO perDAO = new PersonaDAO();
 	static VentaDAO venDAO = new VentaDAO();
 	static PersonaEntity per = new PersonaEntity();
@@ -54,6 +54,8 @@ public class AppTestHibernate {
 			case 6:
 				listadoVenta();
 				break;
+			case 7:
+				busqueda();
 			}
 
 			opcion = mostrarMenu();
@@ -65,7 +67,7 @@ public class AppTestHibernate {
 	private static int mostrarMenu() {
 
 		System.out.println(
-				"MENU OPCIONES: 1 -Alta | 2-Modificación | 3- Listado | 4- Baja | 5- Venta | 6- Listado de Ventas");
+				"MENU OPCIONES: 1 -Alta | 2-Modificación | 3- Listado | 4- Baja | 5- Venta | 6- Listado de Ventas | 7- Buscar Persona x Nombre");
 		int opcion = scan.nextInt();
 		return opcion;
 	}
@@ -75,13 +77,13 @@ public class AppTestHibernate {
 		System.out.println("Ingrese Nombre");
 		String name = scan.next();
 		per.setName(name);
-		System.out.println("Ingrese Fecha de Nacimiento en Formato YYYY-MM-DD");
+		System.out.println("Ingrese Fecha de Nacimiento en Formato YYYY/MM/DD");
 		String fechaDeNac = scan.next();
 		per.setfNac(fechaDeNac);
 		SimpleDateFormat sfd = new SimpleDateFormat("yyyy-MM-dd");
 		int edad = 0;
 	
-		Date fechaparse = DateUtil.parse(DateUtil.PATTERN_D2_M2_Y4, fechaDeNac);
+		Date fechaparse = DateUtil.parse(DateUtil.PATTERN_Y4_M2_D2, fechaDeNac);
 		edad = calcularEdad(fechaparse);
 
 		per.setEdad(edad);
@@ -109,14 +111,14 @@ public class AppTestHibernate {
 				perDAO.insertOrUpdatePersona(per);
 				break;
 			case 2:
-				System.out.println("Ingrese fecha de nacimiento YYYY-MM-DD");
+				System.out.println("Ingrese fecha de nacimiento YYYY/MM/DD");
 				String fechaDeNac = scan.next();
 				per.setfNac(fechaDeNac);
 				SimpleDateFormat sfd = new SimpleDateFormat("yyyy-MM-dd");
 				int edad = 0;
 				
 
-				Date fechaparse = DateUtil.parse(DateUtil.PATTERN_D2_M2_Y4, fechaDeNac);
+				Date fechaparse = DateUtil.parse(DateUtil.PATTERN_Y4_M2_D2, fechaDeNac);
 				edad = calcularEdad(fechaparse);
 
 				per.setEdad(edad);
@@ -133,7 +135,7 @@ public class AppTestHibernate {
 
 				edad = 0;
 
-				fechaparse = DateUtil.parse(DateUtil.PATTERN_D2_M2_Y4, fechaDeNac);
+				fechaparse = DateUtil.parse(DateUtil.PATTERN_Y4_M2_D2, fechaDeNac);
 				edad = calcularEdad(fechaparse);
 
 				per.setEdad(edad);
@@ -173,6 +175,10 @@ public class AppTestHibernate {
 		System.out.println("Ingrese ID persona");
 		int personaId = scan.nextInt();
 		per = perDAO.getPersona(personaId);
+		if (per == null) {
+			System.out.println("El ID no existe elija un nuevo ID");
+			nuevaVenta();
+		} else {
 		System.out.println("La persona seleccionada es:" + per.getName());
 		ven.setPersonaEntity(per);
 		System.out.println("Ingrese Monto de la venta");
@@ -182,7 +188,7 @@ public class AppTestHibernate {
 		ven.setFechaVenta(fecha);
 
 		venDAO.insertVenta(ven);
-
+		}
 	}
 
 	private static void listadoVenta() {
@@ -196,6 +202,17 @@ public class AppTestHibernate {
 			System.out.println(
 					ven.getVentaId() + " " + ven.getFechaVenta() + " " + ven.getImporte() + " " + id + " " + nombre);
 
+		}
+	}
+	
+	private static void busqueda () {
+		
+		System.out.println("Ingrese el nombre a buscar");
+		String name = scan.next();
+		List<PersonaEntity> listaPersona = perDAO.getPersonaXnombre(name);
+		System.out.println("ID_Venta| Fecha| Importe | ID_Persona | Nombre");
+		for (PersonaEntity per : listaPersona) {
+			System.out.println(per.getPersonaId() + " " + per.getName() + " " + per.getEdad() + " " + per.getfNac());
 		}
 	}
 

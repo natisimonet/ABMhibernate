@@ -16,7 +16,7 @@ public class AppTest extends TestCase {
 	PersonaEntity per = new PersonaEntity();
 
 	public void testListado() {
-		System.out.println("Test 1");
+		
 		List<PersonaEntity> list = dao.getAllPersona();
 		boolean tieneRegistros = list.size() > 0;
 		assertTrue(tieneRegistros);
@@ -24,7 +24,7 @@ public class AppTest extends TestCase {
 	}
 
 	public void testAltaBajaYbusquedaNombre() {
-		System.out.println("test 2");
+		
 		List<PersonaEntity> list = dao.getAllPersona();
 		int total1 = list.size();
 		String name = "PRUEBA";
@@ -51,7 +51,9 @@ public class AppTest extends TestCase {
 	}
 	
 	public void testPersonaXid () {
-		per = dao.getPersona(9);
-		assertTrue(per == null);
+		per = dao.getPersona(36);
+		assertTrue(per.getName() != null & per.getEdad() != 0 & per.getfNac() != null);
 	}
+	
+	
 }

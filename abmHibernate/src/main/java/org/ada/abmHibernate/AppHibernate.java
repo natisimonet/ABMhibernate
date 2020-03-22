@@ -75,7 +75,6 @@ public class AppHibernate {
 				"MENU OPCIONES: 1 -Alta Persona | 2-Modificación Persona | 3- Listado Personas | 4- Baja Persona | 5- Buscar Persona x Nombre |  6- Nueva Venta | 7-Listado de Ventas | 8-Borrar Venta");
 		
 		
-		
 		int opcion = scan.nextInt();
 		return opcion;
 	}

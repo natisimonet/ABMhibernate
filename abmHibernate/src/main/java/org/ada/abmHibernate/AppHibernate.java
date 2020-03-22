@@ -49,13 +49,17 @@ public class AppHibernate {
 				baja();
 				break;
 			case 5:
-				nuevaVenta();
+				busqueda();
 				break;
 			case 6:
-				listadoVenta();
+				nuevaVenta();
 				break;
 			case 7:
-				busqueda();
+				listadoVenta();
+				break;
+			case 8:
+				bajaVenta();
+				break;
 			}
 
 			opcion = mostrarMenu();
@@ -64,10 +68,14 @@ public class AppHibernate {
 
 	}
 
+
 	private static int mostrarMenu() {
 
 		System.out.println(
-				"MENU OPCIONES: 1 -Alta | 2-Modificación | 3- Listado | 4- Baja | 5- Venta | 6- Listado de Ventas | 7- Buscar Persona x Nombre");
+				"MENU OPCIONES: 1 -Alta Persona | 2-Modificación Persona | 3- Listado Personas | 4- Baja Persona | 5- Buscar Persona x Nombre |  6- Nueva Venta | 7-Listado de Ventas | 8-Borrar Venta");
+		
+		
+		
 		int opcion = scan.nextInt();
 		return opcion;
 	}
@@ -170,6 +178,19 @@ public class AppHibernate {
 			perDAO.deletePersona(per);
 		}
 	}
+	
+private static void busqueda () {
+		
+		System.out.println("Ingrese el nombre a buscar");
+		String name = scan.next();
+		List<PersonaEntity> listaPersona = perDAO.getPersonaXnombre(name);
+		System.out.println("ID_Venta| Fecha| Importe | ID_Persona | Nombre");
+		for (PersonaEntity per : listaPersona) {
+			System.out.println(per.getPersonaId() + " " + per.getName() + " " + per.getEdad() + " " + per.getfNac());
+		}
+		
+		
+	}
 
 	private static void nuevaVenta() {
 		System.out.println("Ingrese ID persona");
@@ -205,15 +226,20 @@ public class AppHibernate {
 		}
 	}
 	
-	private static void busqueda () {
-		
-		System.out.println("Ingrese el nombre a buscar");
-		String name = scan.next();
-		List<PersonaEntity> listaPersona = perDAO.getPersonaXnombre(name);
-		System.out.println("ID_Venta| Fecha| Importe | ID_Persona | Nombre");
-		for (PersonaEntity per : listaPersona) {
-			System.out.println(per.getPersonaId() + " " + per.getName() + " " + per.getEdad() + " " + per.getfNac());
+	
+	
+	private static void bajaVenta() {
+		System.out.println("Ingrese el ID de la venta a borrar");
+		int iDventa = scan.nextInt();
+		ven = venDAO.getVentaXid(iDventa);
+		if (ven == null) {
+			System.out.println("El ID de Venta no existe elija una nuevo ID");
+			bajaVenta();
+		} else {
+			venDAO.deleteVenta(ven);
+			
 		}
+		
 	}
 
 	private static int calcularEdad(Date fechaNac) {

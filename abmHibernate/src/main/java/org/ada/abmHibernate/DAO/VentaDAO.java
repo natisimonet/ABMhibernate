@@ -36,5 +36,46 @@ public class VentaDAO {
 		HibernateUtil.shutdown();
 		return venta;
 	}
+	
+	public void deleteVenta(VentaEntity ven) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		session.beginTransaction();
+		session.delete(ven);
+		session.getTransaction().commit();
+		HibernateUtil.shutdown();
+	}
+	
+	public VentaEntity getVentaXid(int ventaId) {
+		Session sesn = HibernateUtil.getSessionFactory().openSession();
+		VentaEntity ven = null;
+		List<VentaEntity> ven1 = new ArrayList<VentaEntity>();
+		try {
+			ven1 = sesn.createQuery("From VentaEntity Where VentaId =" + ventaId).list();
+			if (!ven1.isEmpty()) {
+				ven = ven1.get(0);
+			}
+		} catch (HibernateException e) {
+			e.printStackTrace();
+		} finally {
+			sesn.close();
+		}
+		HibernateUtil.shutdown();
+		return ven;
+	}
+	
+	public List<VentaEntity> getVentaxImporte(float importe) { 
+		Session sesn = HibernateUtil.getSessionFactory().openSession();
+		VentaEntity ven = null;
+		List<VentaEntity> ven1 = new ArrayList<VentaEntity>();
+		try {
+			ven1 = sesn.createQuery("From VentaEntity Where Importe =" + importe).list();
+		} catch (HibernateException e) {
+			e.printStackTrace();
+		} finally {
+			sesn.close();
+		}
 
+		HibernateUtil.shutdown();
+		return ven1;
+	}
 }

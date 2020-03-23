@@ -4,11 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import org.ada.abmHibernate.HibernateUtil;
 import org.ada.abmHibernate.dto.PersonaEntity;
 import org.ada.abmHibernate.dto.VentaEntity;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+
+import hibernate.util.HibernateUtil;
 
 public class VentaDAO {
 

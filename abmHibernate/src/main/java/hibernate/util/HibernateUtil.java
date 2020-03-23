@@ -1,4 +1,4 @@
-package org.ada.abmHibernate;
+package hibernate.util;
 
 import java.io.File;
 

@@ -57,7 +57,7 @@ public class AppTest extends TestCase {
 		assertTrue(per.getName() != null & per.getEdad() != 0 & per.getfNac() != null);
 	}
 
-	public void testVentaAltaBajaYlistado() {
+	public void testVentaAltaBajaYlistado() { // se carga la venta en negativo para anularla.
 		VentaEntity ven = new VentaEntity();
 		VentaDAO venDAO = new VentaDAO();
 		PersonaEntity per = new PersonaEntity();
@@ -74,15 +74,20 @@ public class AppTest extends TestCase {
 		int total2 = list2.size();
 		assertTrue(total2 > total1);
 
-		List<VentaEntity> listPrueba = venDAO.getVentaxImporte(importe);
-
-		VentaEntity ven2 = null;
-		ven2 = listPrueba.get(0);
-
-		venDAO.deleteVenta(ven2);
+		VentaEntity ven2 = new VentaEntity();
+		ven2.setPersonaEntity(per);
+		ven2.setFechaVenta(fecha);
+		float importe2 = -999999999;
+		ven2.setImporte(importe2);
+		venDAO.insertVenta(ven2);
 		List<VentaEntity> list3 = venDAO.getAllventa();
-		int total3 = list3.size();
-		assertTrue(total3 == total1);
+		int index = list3.size() -1;
+		ven = list3.get(index);
+		int id = ven.getVentaId();
+		VentaEntity ven3 = new VentaEntity();
+		ven3 = venDAO.getVentaXid(id);
+		float importe3 = ven3.getImporte();
+		assertTrue(importe3 == importe2);
 
 	}
 

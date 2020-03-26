@@ -38,13 +38,13 @@ public class VentaDAO {
 		return venta;
 	}
 	
-	public void deleteVenta(VentaEntity ven) {
+	/* public void deleteVenta(VentaEntity ven) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		session.beginTransaction();
 		session.delete(ven);
 		session.getTransaction().commit();
 		HibernateUtil.shutdown();
-	}
+	}*/
 	
 	public VentaEntity getVentaXid(int ventaId) {
 		Session sesn = HibernateUtil.getSessionFactory().openSession();
@@ -64,7 +64,7 @@ public class VentaDAO {
 		return ven;
 	}
 	
-	public List<VentaEntity> getVentaxImporte(float importe) { 
+	/*public List<VentaEntity> getVentaxImporte(float importe) { 
 		Session sesn = HibernateUtil.getSessionFactory().openSession();
 		VentaEntity ven = null;
 		List<VentaEntity> ven1 = new ArrayList<VentaEntity>();
@@ -78,5 +78,5 @@ public class VentaDAO {
 
 		HibernateUtil.shutdown();
 		return ven1;
-	}
+	}*/
 }

@@ -58,7 +58,7 @@ public class AppHibernate {
 				listadoVenta();
 				break;
 			case 8:
-				bajaVenta();
+				anularVenta();
 				break;
 			}
 
@@ -68,13 +68,12 @@ public class AppHibernate {
 
 	}
 
-
 	private static int mostrarMenu() {
 
-		System.out.println(
-				"MENU OPCIONES: 1 -Alta Persona | 2-Modificación Persona | 3- Listado Personas | 4- Baja Persona | 5- Buscar Persona x Nombre |  6- Nueva Venta | 7-Listado de Ventas | 8-Borrar Venta");
-		
-		
+		System.out.println("MENU OPCIONES");		
+		System.out.println("1- Alta Nueva Persona | 2- Modificación Persona | 3- Listado Personas | 4- Baja Persona");
+		System.out.println("5- Buscar x Nombre | 6- Nueva Venta | 7-Listado de Ventas | 8-Anular Venta");
+
 		int opcion = scan.nextInt();
 		return opcion;
 	}
@@ -89,7 +88,7 @@ public class AppHibernate {
 		per.setfNac(fechaDeNac);
 		SimpleDateFormat sfd = new SimpleDateFormat("yyyy-MM-dd");
 		int edad = 0;
-	
+
 		Date fechaparse = DateUtil.parse(DateUtil.PATTERN_Y4_M2_D2, fechaDeNac);
 		edad = calcularEdad(fechaparse);
 
@@ -123,7 +122,6 @@ public class AppHibernate {
 				per.setfNac(fechaDeNac);
 				SimpleDateFormat sfd = new SimpleDateFormat("yyyy-MM-dd");
 				int edad = 0;
-				
 
 				Date fechaparse = DateUtil.parse(DateUtil.PATTERN_Y4_M2_D2, fechaDeNac);
 				edad = calcularEdad(fechaparse);
@@ -177,9 +175,9 @@ public class AppHibernate {
 			perDAO.deletePersona(per);
 		}
 	}
-	
-private static void busqueda () {
-		
+
+	private static void busqueda() {
+
 		System.out.println("Ingrese el nombre a buscar");
 		String name = scan.next();
 		List<PersonaEntity> listaPersona = perDAO.getPersonaXnombre(name);
@@ -187,8 +185,7 @@ private static void busqueda () {
 		for (PersonaEntity per : listaPersona) {
 			System.out.println(per.getPersonaId() + " " + per.getName() + " " + per.getEdad() + " " + per.getfNac());
 		}
-		
-		
+
 	}
 
 	private static void nuevaVenta() {
@@ -199,15 +196,15 @@ private static void busqueda () {
 			System.out.println("El ID no existe elija un nuevo ID");
 			nuevaVenta();
 		} else {
-		System.out.println("La persona seleccionada es:" + per.getName());
-		ven.setPersonaEntity(per);
-		System.out.println("Ingrese Monto de la venta");
-		float importe = scan.nextFloat();
-		ven.setImporte(importe);
-		Date fecha = new Date();
-		ven.setFechaVenta(fecha);
+			System.out.println("La persona seleccionada es:" + per.getName());
+			ven.setPersonaEntity(per);
+			System.out.println("Ingrese Monto de la venta");
+			float importe = scan.nextFloat();
+			ven.setImporte(importe);
+			Date fecha = new Date();
+			ven.setFechaVenta(fecha);
 
-		venDAO.insertVenta(ven);
+			venDAO.insertVenta(ven);
 		}
 	}
 
@@ -224,21 +221,26 @@ private static void busqueda () {
 
 		}
 	}
-	
-	
-	
-	private static void bajaVenta() {
-		System.out.println("Ingrese el ID de la venta a borrar");
+
+	private static void anularVenta() { // Anula la venta creando otra igual con importe en negativo ("NC")
+		System.out.println("Ingrese el id de la venta a anular");
 		int iDventa = scan.nextInt();
 		ven = venDAO.getVentaXid(iDventa);
 		if (ven == null) {
 			System.out.println("El ID de Venta no existe elija una nuevo ID");
-			bajaVenta();
+			anularVenta();
 		} else {
-			venDAO.deleteVenta(ven);
-			
+			VentaEntity ven2 = new VentaEntity();
+			float importe = ven.getImporte() * (-1);
+			ven2.setImporte(importe);
+			per = ven.getPersonaEntity();
+			ven2.setPersonaEntity(per);
+			Date fecha = new Date();
+			ven2.setFechaVenta(fecha);
+			venDAO.insertVenta(ven2);
+
 		}
-		
+
 	}
 
 	private static int calcularEdad(Date fechaNac) {

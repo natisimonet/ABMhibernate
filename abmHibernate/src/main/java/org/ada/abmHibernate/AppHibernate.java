@@ -85,7 +85,7 @@ public class AppHibernate {
 		per.setName(name);
 		System.out.println("Ingrese Fecha de Nacimiento en Formato YYYY/MM/DD");
 		String fechaDeNac = scan.next();
-		per.setfNac(fechaDeNac);
+		
 		SimpleDateFormat sfd = new SimpleDateFormat("yyyy-MM-dd");
 		int edad = 0;
 
@@ -93,6 +93,7 @@ public class AppHibernate {
 		edad = calcularEdad(fechaparse);
 
 		per.setEdad(edad);
+		per.setfNac(fechaparse);
 		perDAO.insertOrUpdatePersona(per);
 	}
 
@@ -119,7 +120,7 @@ public class AppHibernate {
 			case 2:
 				System.out.println("Ingrese fecha de nacimiento YYYY/MM/DD");
 				String fechaDeNac = scan.next();
-				per.setfNac(fechaDeNac);
+			
 				SimpleDateFormat sfd = new SimpleDateFormat("yyyy-MM-dd");
 				int edad = 0;
 
@@ -127,7 +128,7 @@ public class AppHibernate {
 				edad = calcularEdad(fechaparse);
 
 				per.setEdad(edad);
-
+				per.setfNac(fechaparse);
 				perDAO.insertOrUpdatePersona(per);
 				break;
 			case 3:
@@ -136,7 +137,7 @@ public class AppHibernate {
 				per.setName(nombrecambiado);
 				System.out.println("Ingrese fecha de nacimiento YYYY/MM/DD");
 				fechaDeNac = scan.next();
-				per.setfNac(fechaDeNac);
+				
 
 				edad = 0;
 
@@ -144,6 +145,7 @@ public class AppHibernate {
 				edad = calcularEdad(fechaparse);
 
 				per.setEdad(edad);
+				per.setfNac(fechaparse);
 				perDAO.insertOrUpdatePersona(per);
 				break;
 			default:

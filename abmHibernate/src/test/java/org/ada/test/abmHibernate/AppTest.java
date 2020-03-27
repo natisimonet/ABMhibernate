@@ -1,5 +1,6 @@
 package org.ada.test.abmHibernate;
 
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 
@@ -8,6 +9,7 @@ import org.ada.abmHibernate.DAO.VentaDAO;
 import org.ada.abmHibernate.dto.PersonaEntity;
 import org.ada.abmHibernate.dto.VentaEntity;
 
+import hibernate.util.DateUtil;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -24,7 +26,7 @@ public class AppTest extends TestCase {
 
 	}
 
-	public void testAltaBajaYbusquedaNombre() {
+	public void testAltaBajaYbusquedaNombre() throws ParseException {
 		PersonaEntity per = new PersonaEntity();
 		List<PersonaEntity> list = dao.getAllPersona();
 		int total1 = list.size();
@@ -32,7 +34,9 @@ public class AppTest extends TestCase {
 		String fNac = "1990/08/10";
 		int edad = 24;
 		per.setEdad(edad);
-		per.setfNac(fNac);
+		
+		Date fechaparse = DateUtil.parse(DateUtil.PATTERN_Y4_M2_D2, fNac);
+		per.setfNac(fechaparse);
 		per.setName(name);
 		dao.insertOrUpdatePersona(per);
 		List<PersonaEntity> list2 = dao.getAllPersona();
@@ -87,8 +91,10 @@ public class AppTest extends TestCase {
 		VentaEntity ven3 = new VentaEntity();
 		ven3 = venDAO.getVentaXid(id);
 		float importe3 = ven3.getImporte();
-		assertTrue(importe3 == importe2);
+		assertTrue(importe3 == (importe * -1));
 
+		//Otra opción es que la venta de Test sea con importe 0 o 0.01 y
+		//no sería necesario borrarla.
 	}
 
 }

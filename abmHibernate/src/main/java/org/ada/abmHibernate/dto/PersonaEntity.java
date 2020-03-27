@@ -1,6 +1,7 @@
 package org.ada.abmHibernate.dto;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -32,7 +33,7 @@ public class PersonaEntity implements Serializable {
 	private int edad;
 	
 	@Column(name = "FECHA_NACIMIENTO", unique = false, nullable = false, length = 100)
-	private String fNac;
+	private Date fNac;
 
 	public Integer getPersonaId() {
 		return personaId;
@@ -58,12 +59,12 @@ public class PersonaEntity implements Serializable {
 		this.edad = edad;
 	}
 
-	public String getfNac() {
+	public Date getfNac() {
 		return fNac;
 	}
 
-	public void setfNac(String fNac) {
-		this.fNac = fNac;
+	public void setfNac(Date fechaparse) {
+		this.fNac = fechaparse;
 	}
 
 }

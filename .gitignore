@@ -24,6 +24,11 @@
 *.classpath
 *.project
 /target/
+/abmHibernate/target/
+<<<<<<< HEAD
+=======
+
+>>>>>>> b0dcdc33dbd914796e820fb11cc8f26984b8e5da
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*

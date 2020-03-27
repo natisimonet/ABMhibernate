@@ -94,7 +94,7 @@ public class AppTest extends TestCase {
 		assertTrue(importe3 == (importe * -1));
 
 		//Otra opción es que la venta de Test sea con importe 0 o 0.01 y
-		//no sería necesario borrarla.
+		//no sería necesario borrarla :D.
 	}
 
 }
